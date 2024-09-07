@@ -33,7 +33,7 @@ const AddEditNotes = ({ noteData, type, onClose }) => {
   return (
     <div className="relative">
       <button
-        className="w-10 h-10 rounded-full flex items-center justify-center absolute -top-3 -right-3 hover:bg-slate-50"
+        className="absolute flex items-center justify-center w-10 h-10 rounded-full -top-3 -right-3 hover:bg-slate-50"
         onClick={onClose}
       >
         <MdClose className="text-xl text-slate-400" />
@@ -42,7 +42,7 @@ const AddEditNotes = ({ noteData, type, onClose }) => {
         <label className="input-label">TITLE</label>
         <input
           type="text"
-          className="text-2xl text-slate-950 outline-none"
+          className="text-2xl outline-none text-slate-950"
           placeholder="Go To Gym At 5"
           value={title}
           onChange={({ target }) => setTitle(target.value)}
@@ -52,7 +52,7 @@ const AddEditNotes = ({ noteData, type, onClose }) => {
         <label className="input-label">CONTENT</label>
         <textarea
           type="text"
-          className="text-sm text-slate-950 outline-none bg-slate-50 p-2 rounded"
+          className="p-2 text-sm rounded outline-none text-slate-950 bg-slate-50"
           placeholder="Content"
           rows={10}
           value={content}
@@ -64,10 +64,10 @@ const AddEditNotes = ({ noteData, type, onClose }) => {
         <TagInput tags={tags} setTags={setTags} />
       </div>
 
-      {error && <p className="text-red-500 text-xs pt-4">{error}</p>}
+      {error && <p className="pt-4 text-xs text-red-500">{error}</p>}
 
       <button
-        className="btn-primary font-medium mt-5 p-3"
+        className="p-3 mt-5 font-medium btn-primary"
         onClick={handleAddNote}
       >
         ADD

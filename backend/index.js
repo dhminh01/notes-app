@@ -26,6 +26,7 @@ app.get("/", (req, res) => {
   res.json({ data: "hello" });
 });
 
+//Create Account
 app.post("/create-account", async (req, res) => {
   const { fullName, email, password } = req.body;
 
@@ -70,6 +71,7 @@ app.post("/create-account", async (req, res) => {
   });
 });
 
+//Login
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   if (!email) {
@@ -94,11 +96,31 @@ app.post("/login", async (req, res) => {
       accessToken,
     });
   } else {
-    return res.json({
+    return res.status(400).json({
       error: true,
       message: "Invalid Credentials",
     });
   }
+});
+
+//Get users
+app.get("/get-users", authenticateToken, async (req, res) => {
+  const { user } = req.user;
+  const isUser = await User.findOne({ _id: user._id });
+
+  if (!isUser) {
+    return res.sendStatus(401);
+  }
+
+  return res.json({
+    user: {
+      fullName: isUser.fullName,
+      email: isUser.email,
+      _id: isUser._id,
+      createdOn: isUser.createdOn,
+    },
+    message: "",
+  });
 });
 
 //Add note
