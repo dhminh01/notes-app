@@ -4,7 +4,7 @@ Note application
 
 ## Authors
 
--[Duơng Hong Minh](https://github.com/dhminh01)
+- [DUONG HONG MINH](https://github.com/dhminh01)
 
 ## Features
 
