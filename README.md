@@ -18,4 +18,5 @@ Note application
 
 Uncomplete!!!
 
-## Notes
+## Installation
+1. Download the source code from this git repo

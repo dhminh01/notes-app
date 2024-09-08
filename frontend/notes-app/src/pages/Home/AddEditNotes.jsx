@@ -1,17 +1,69 @@
 import React, { useState } from "react";
 import TagInput from "../../components/Input/TagInput";
 import { MdClose } from "react-icons/md";
+import axiosInstance from "../../utils/axiosInstance";
 
-const AddEditNotes = ({ noteData, type, onClose }) => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [tags, setTags] = useState([]);
+const AddEditNotes = ({
+  noteData,
+  type,
+  getAllNotes,
+  onClose,
+  showToastMessage,
+}) => {
+  const [title, setTitle] = useState(noteData?.title || "");
+  const [content, setContent] = useState(noteData?.content || "");
+  const [tags, setTags] = useState(noteData?.tags || []);
 
   const [error, setError] = useState(null);
 
-  const addNewNote = async () => {};
+  //Add notes func
+  const addNewNote = async () => {
+    try {
+      const response = await axiosInstance.post("/add-note", {
+        title,
+        content,
+        tags,
+      });
+      if (response.data && response.data.note) {
+        showToastMessage("Note added successfully");
+        getAllNotes();
+        onClose();
+      }
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setError(error.response.data.message);
+      }
+    }
+  };
 
-  const editNote = async () => {};
+  //Edit notes func
+  const editNote = async () => {
+    const noteId = noteData._id;
+    try {
+      const response = await axiosInstance.put("/delete-note/" + noteId, {
+        title,
+        content,
+        tags,
+      });
+      if (response.data && response.data.note) {
+        showToastMessage("Note updated successfully");
+        getAllNotes();
+        onClose();
+      }
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setError(error.response.data.message);
+      }
+    }
+  };
 
   const handleAddNote = () => {
     if (!title) {
@@ -43,7 +95,7 @@ const AddEditNotes = ({ noteData, type, onClose }) => {
         <input
           type="text"
           className="text-2xl outline-none text-slate-950"
-          placeholder="Go To Gym At 5"
+          placeholder="Enter the title here"
           value={title}
           onChange={({ target }) => setTitle(target.value)}
         />
@@ -70,7 +122,7 @@ const AddEditNotes = ({ noteData, type, onClose }) => {
         className="p-3 mt-5 font-medium btn-primary"
         onClick={handleAddNote}
       >
-        ADD
+        {type === "edit" ? "UPDATE" : "ADD"}
       </button>
     </div>
   );
