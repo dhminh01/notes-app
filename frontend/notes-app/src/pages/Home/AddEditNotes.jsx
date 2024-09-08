@@ -44,7 +44,7 @@ const AddEditNotes = ({
   const editNote = async () => {
     const noteId = noteData._id;
     try {
-      const response = await axiosInstance.put("/delete-note/" + noteId, {
+      const response = await axiosInstance.put("/edit-note/" + noteId, {
         title,
         content,
         tags,
